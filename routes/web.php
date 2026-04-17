@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Livewire\About;
 use App\Livewire\Category;
 use App\Livewire\Contact;
@@ -9,6 +10,7 @@ use App\Livewire\Posts;
 use App\Livewire\User;
 use Illuminate\Support\Facades\Route;
 
+// Front End
 Route::get('/', Home::class)->name('home');
 Route::get('/posts', Posts::class)->name('posts');
 Route::get('/post/{post:slug}', Post::class)->name('post');
@@ -17,9 +19,13 @@ Route::get('/categories/{category:slug}', Category::class)->name('categories');
 Route::get('/about', About::class)->name('about');
 Route::get('/contact', Contact::class)->name('contact');
 
-Route::view('dashboard', 'dashboard')
+// Back End
+Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+Route::get('/dashboard/{post:slug}', [DashboardController::class, 'show'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard.show');
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])
