@@ -23,6 +23,12 @@ Route::get('/contact', Contact::class)->name('contact');
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+Route::post('/dashboard', [DashboardController::class, 'store'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard.store');
+Route::get('/dashboard/create', [DashboardController::class, 'create'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard.create');
 Route::get('/dashboard/{post:slug}', [DashboardController::class, 'show'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard.show');
