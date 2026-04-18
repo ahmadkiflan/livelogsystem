@@ -1,7 +1,7 @@
 <main class="pt-8 pb-16 lg:pt-0 lg:pb-0 bg-white dark:bg-gray-900 antialiased ">
     <div class="flex px-4 mx-auto ">
         <article class=" mx-auto max-w-full format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
-            <a href="{{ route('dashboard') }}"
+            <a href="{{ route('posts') }}"
                 class="text-white bg-slate-800 hover:bg-slate-700 box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded mb-15 text-xs px-3 py-1.5 focus:outline-none inline-block no-underline">Back
                 to all posts</a>
             <header class="mb-4 lg:mb-6 not-format">

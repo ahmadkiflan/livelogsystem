@@ -13,15 +13,15 @@ class Post extends Model
 
     protected $with = ['author', 'category'];
 
-    // protected $fillable = [
-    //     'title',
-    //     'slug',
-    //     'author_id',
-    //     'category_id',
-    //     'content',
-    // ];
+    protected $fillable = [
+        'title',
+        'slug',
+        'author_id',
+        'category_id',
+        'content',
+    ];
 
-    protected $guarded = ['id'];
+    // protected $guarded = ['id'];
 
     public function author(): BelongsTo
     {

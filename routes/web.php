@@ -20,21 +20,16 @@ Route::get('/about', About::class)->name('about');
 Route::get('/contact', Contact::class)->name('contact');
 
 // Back End
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-Route::post('/dashboard', [DashboardController::class, 'store'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard.store');
-Route::get('/dashboard/create', [DashboardController::class, 'create'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard.create');
-Route::get('/dashboard/{post:slug}', [DashboardController::class, 'show'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard.show');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('/dashboard', [DashboardController::class, 'store'])->name('dashboard.store');
+    Route::get('/dashboard/create', [DashboardController::class, 'create'])->name('dashboard.create');
+    Route::get('/dashboard/{post:slug}/edit', [DashboardController::class, 'edit'])->name('dashboard.edit');
+    Route::patch('/dashboard/{post:slug}', [DashboardController::class, 'update'])->name('dashboard.update');
+    Route::get('/dashboard/{post:slug}', [DashboardController::class, 'show'])->name('dashboard.show');
+    Route::delete('/dashboard/{post:slug}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
+});
 
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
+Route::view('profile', 'profile')->middleware(['auth'])->name('profile');
 
 require __DIR__.'/auth.php';

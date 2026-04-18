@@ -24,15 +24,12 @@
     <flux:spacer />
 
     @if (Auth::check())
-        <flux:dropdown position="top" align="start">
-            <flux:profile avatar="https://fluxui.dev/img/demo/user.png" />
-            <flux:menu>
-                <flux:menu.radio.group>
-                    <flux:menu.radio>{{ Auth::user()->name }}</flux:menu.radio>
-                </flux:menu.radio.group>
-                <flux:menu.separator />
-                <flux:menu.item icon="arrow-right-start-on-rectangle">Logout</flux:menu.item>
-            </flux:menu>
+        <flux:dropdown position="bottom" align="end">
+            <flux:profile circle name="{{ Auth::user()->name }}" avatar="https://unavatar.io/x/calebporzio" />
+            <flux:navmenu>
+                <flux:navmenu.item href="{{ route('dashboard') }}" icon="building-storefront">Dashboard
+                </flux:navmenu.item>
+            </flux:navmenu>
         </flux:dropdown>
     @else
         <flux:button.group>

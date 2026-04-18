@@ -69,24 +69,41 @@ class DashboardController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        //
+        return view('dashboard.edit', ['post' => $post]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|unique:posts, title'.$post->id,
+            'category_id' => 'required',
+            'content' => 'string|required',
+        ]);
+
+        $post->update([
+            'title' => $request->title,
+            'author_id' => Auth::user()->id,
+            'slug' => Str::slug($request->title),
+            'category_id' => $request->category_id,
+            'content' => $request->content,
+        ]);
+
+        return redirect('dashboard')->with(['success' => 'Your post has been updated!']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect('dashboard')->with(['success' => 'Your post has been deleted!']);
+
     }
 }
