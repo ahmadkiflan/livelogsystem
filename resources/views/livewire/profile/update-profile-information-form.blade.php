@@ -1,15 +1,19 @@
 <?php
 
 use App\Models\User;
+use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Livewire\Volt\Component;
 
 new class extends Component {
+    use WithFileUploads;
+
     public string $name = '';
     public string $username = '';
     public string $email = '';
+    public $avatar;
 
     /**
      * Mount the component.
@@ -19,6 +23,7 @@ new class extends Component {
         $this->name = Auth::user()->name;
         $this->username = Auth::user()->username;
         $this->email = Auth::user()->email;
+        $this->avatar = Auth::user()->avatar;
     }
 
     /**
@@ -30,17 +35,21 @@ new class extends Component {
 
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'min:4', 'max:50', 'unique:users'],
+            'username' => ['required', 'string', 'min:4', 'max:50', Rule::unique(User::class)->ignore($user->id)],
             'email' => ['required', 'string', 'lowercase', 'email:dns', 'max:255', Rule::unique(User::class)->ignore($user->id)],
+            'avatar' => ['image', 'max:5000'],
         ]);
-
-        $user->fill($validated);
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
 
-        $user->save();
+        if ($this->avatar && !empty($user->avatar)) {
+            Storage::disk('public')->delete($user->avatar);
+            $validated['avatar'] = $this->avatar->store('img', 'public');
+        }
+
+        $user->update($validated);
 
         $this->dispatch('profile-updated', name: $user->name);
     }
@@ -116,8 +125,27 @@ new class extends Component {
             @endif
         </div>
 
+        <div>
+            <x-input-label for="avatar" :value="__('Upload Avatar')" />
+            <x-text-input wire:model="avatar" id="avatar" name="avatar" type="file"
+                class="mt-1 block w-full border" autofocus autocomplete="avatar" />
+            <x-input-error class="mt-2" :messages="$errors->get('avatar')" />
+        </div>
+
+        <flux:button wire:loading wire:target="avatar" :loading="true">
+            Loading
+        </flux:button>
+
+        @if ($avatar && !is_string($avatar))
+            <img src="{{ $avatar->temporaryUrl() }}" class="rounded-full w-18 h-18">
+        @elseif ($avatar && is_string($avatar))
+            <img src="{{ asset('storage/' . $avatar) }}" class="rounded-full w-18 h-18">
+        @endif
+
+
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+
+            <x-primary-button type="submit">{{ __('Save') }}</x-primary-button>
 
             <x-action-message class="me-3" on="profile-updated">
                 {{ __('Saved.') }}

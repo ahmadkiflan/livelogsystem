@@ -25,7 +25,8 @@
 
     @if (Auth::check())
         <flux:dropdown position="bottom" align="end">
-            <flux:profile circle name="{{ Auth::user()->name }}" avatar="https://unavatar.io/x/calebporzio" />
+            <flux:profile circle name="{{ Auth::user()->name }}"
+                avatar="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('storage/avatars/default.jpg') }}" />
             <flux:navmenu>
                 <flux:navmenu.item href="{{ route('dashboard') }}" icon="building-storefront">Dashboard
                 </flux:navmenu.item>

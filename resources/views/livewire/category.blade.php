@@ -78,7 +78,7 @@
                         <div class="relative mt-8 flex items-center  justify-between  w-full">
                             <div class="text-sm flex items-center gap-x-2">
                                 <flux:avatar size="sm" href="https://x.com/calebporzio"
-                                    src="https://unavatar.io/x/calebporzio" />
+                                    src="{{ $post->author->avatar ? asset('storage/' . $post->author->avatar) : asset('storage/avatars/default.jpg') }}" />
                                 <p class="font-semibold text-gray-900 ">
                                     <a href="{{ route('authors', $post->author->username) }}">
                                         <span class="absolute inset-0"></span>
