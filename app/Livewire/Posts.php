@@ -24,7 +24,7 @@ class Posts extends Component
         return view('livewire.posts', [
             'posts' => Post::latest()
                 ->where('title', 'like', '%'.$this->query.'%')
-                ->paginate(9),
+                ->paginate(12),
         ]);
     }
 }

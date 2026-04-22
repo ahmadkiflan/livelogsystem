@@ -31,7 +31,7 @@ class Category extends Component
             'posts' => Post::latest()
                 ->where('category_id', $this->category->id)
                 ->where('title', 'like', '%'.$this->query.'%')
-                ->paginate(9),
+                ->paginate(12),
         ]);
     }
 }

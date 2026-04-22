@@ -31,7 +31,7 @@ class User extends Component
             'posts' => Post::latest()
                 ->where('author_id', $this->user->id)
                 ->where('title', 'like', '%'.$this->query.'%')
-                ->paginate(9),
+                ->paginate(12),
         ]);
     }
 }

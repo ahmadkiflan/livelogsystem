@@ -57,36 +57,52 @@
         @if ($posts->isNotEmpty())
             <flux:pagination :paginator="$posts" />
             <div
-                class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16  border-gray-200 lg:mt-0 lg:pt-4 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                class="mx-auto grid max-w-2xl md:grid-cols-2 grid-cols-1 gap-x-15 gap-y-16  border-gray-200 lg:mt-0 lg:pt-4 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                 @foreach ($posts as $post)
-                    <article class="flex rounded p-4 max-w-xl flex-col items-start justify-between shadow-sm">
-                        <div class="flex items-center gap-x-4 text-xs justify-between w-full">
-                            <time class="text-gray-500">{{ $post->created_at->diffForHumans() }}</time>
-                            <a href="{{ route('categories', $post->category->slug) }}"
-                                class="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">{{ $post->category->name }}</a>
+                    <article class="flex  max-w-xl gap-y-1 py-4 flex-col items-start justify-between border-b">
+                        <figure
+                            class="relative max-w-full w-full transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+                            <a href="{{ route('post', $post->slug) }}">
+                                <img class="rounded-lg w-full h-52 object-cover"
+                                    src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-3.png"
+                                    alt="image description">
+                            </a>
+                            <figcaption class="absolute px-4 text-lg text-white bottom-6">
+                                <h3 class="mt-3 text-xl font-semibold text-white group-hover:text-gray-600">
+                                    <a href="{{ route('post', $post->slug) }}">
+                                        <span class="absolute inset-0"></span>
+                                        {{ $post->title }}
+                                    </a>
+                                </h3>
+                            </figcaption>
+                        </figure>
+                        <div class="flex items-center mt-3 gap-x-4 text-xs justify-between w-full">
+                            <flux:button variant="primary" color="rose"
+                                href="{{ route('categories', $post->category->slug) }}" size="xs">
+                                {{ $post->category->name }}
+                            </flux:button>
+
                         </div>
                         <div class="group relative grow">
-                            <h3 class="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
-                                <a href="{{ route('post', $post->slug) }}">
-                                    <span class="absolute inset-0"></span>
-                                    {{ $post->title }}
-                                </a>
-                            </h3>
-                            <p class="mt-5 line-clamp-3 text-sm/6 text-gray-600">{{ Str::limit($post->content, 200) }}
+                            <p class="mt-3 line-clamp-3 text-md text-gray-600">{{ Str::limit($post->content, 150) }}
                             </p>
                         </div>
-                        <div class="relative mt-8 flex items-center  justify-between  w-full">
+                        <div class="relative mt-4 flex items-end  justify-between  w-full">
                             <div class="text-sm flex items-center gap-x-2">
-                                <flux:avatar size="sm" href="https://x.com/calebporzio"
+                                <flux:avatar circle href="https://x.com/calebporzio"
                                     src="{{ $post->author->avatar ? asset('storage/' . $post->author->avatar) : asset('storage/avatars/default.jpg') }}" />
-                                <p class="font-semibold text-gray-900 ">
-                                    <a href="{{ route('authors', $post->author->username) }}">
-                                        <span class="absolute inset-0"></span>
-                                        {{ $post->author->name }}
-                                    </a>
-                                </p>
+                                <div>
+                                    <p class="font-semibold text-gray-900 ">
+                                        <a href="{{ route('authors', $post->author->username) }}">
+                                            <span class="absolute inset-0"></span>
+                                            {{ $post->author->name }}
+                                        </a>
+                                    </p>
+                                    <time class="text-gray-500">{{ $post->created_at->diffForHumans() }}</time>
+                                </div>
                             </div>
-                            <flux:button href="{{ route('post', $post->slug) }}" icon:trailing="arrow-up-right">
+                            <flux:button variant="primary" color="zinc" size="xs"
+                                href="{{ route('post', $post->slug) }}" icon:trailing="arrow-up-right">
                                 Read more
                             </flux:button>
                         </div>
