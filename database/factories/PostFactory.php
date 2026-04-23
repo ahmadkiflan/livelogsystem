@@ -20,7 +20,7 @@ class PostFactory extends Factory
      */
     public function definition(): array
     {
-        $title = $this->faker->sentence();
+        $title = $this->faker->sentence(6, false);
 
         return [
             'title' => $title,

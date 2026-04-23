@@ -16,7 +16,7 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Web Development',
                 'slug' => 'web-development',
-                'color' => 'bg-blue-100 ',
+                'color' => 'rose',
             ],
         );
 
@@ -24,7 +24,7 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Artificial Intelligence',
                 'slug' => 'artificial-intelligence',
-                'color' => 'bg-purple-100 ',
+                'color' => 'fuchsia',
             ],
         );
 
@@ -32,7 +32,7 @@ class CategorySeeder extends Seeder
             [
                 'name' => 'Data Science',
                 'slug' => 'data-science',
-                'color' => 'bg-green-100 ',
+                'color' => 'teal',
             ],
         );
     }

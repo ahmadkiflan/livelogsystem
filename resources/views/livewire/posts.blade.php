@@ -25,15 +25,15 @@
                 class="mx-auto grid max-w-2xl md:grid-cols-2 grid-cols-1 gap-x-15 gap-y-16  border-gray-200 lg:mt-0 lg:pt-4 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                 @foreach ($posts as $post)
                     <article class="flex  max-w-xl gap-y-1 py-4 flex-col items-start justify-between border-b">
-                        <figure
-                            class="relative max-w-full w-full transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0">
+                        <figure class="relative max-w-full w-full transition-all duration-300 cursor-pointer">
                             <a href="{{ route('post', $post->slug) }}">
-                                <img class="rounded-lg w-full h-52 object-cover"
-                                    src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/content-gallery-3.png"
-                                    alt="image description">
+                                <img class="rounded-lg  hover:scale-105 transition-all"
+                                    src="https://picsum.photos/1200/650?random={{ $post->id }}">
+
                             </a>
                             <figcaption class="absolute px-4 text-lg text-white bottom-6">
-                                <h3 class="mt-3 text-xl font-semibold text-white group-hover:text-gray-600">
+                                <h3
+                                    class=" text-xl font-semibold text-white group-hover:text-gray-600 mix-blend-plus-darker">
                                     <a href="{{ route('post', $post->slug) }}">
                                         <span class="absolute inset-0"></span>
                                         {{ $post->title }}
@@ -42,7 +42,7 @@
                             </figcaption>
                         </figure>
                         <div class="flex items-center mt-3 gap-x-4 text-xs justify-between w-full">
-                            <flux:button variant="primary" color="fuchsia"
+                            <flux:button variant="primary" color="{{ $post->category->color }}"
                                 href="{{ route('categories', $post->category->slug) }}" size="xs">
                                 {{ $post->category->name }}
                             </flux:button>
